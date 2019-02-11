@@ -18,120 +18,50 @@ var advancedStaggeringAnimation = (function() {
 	var staggerVisualizerEl = document.querySelector(".stagger-visualizer");
 	var dotsWrapperEl = staggerVisualizerEl.querySelector(".dots-wrapper");
 	var dotsFragment = document.createDocumentFragment();
-	var grid = [20, 20];
-	var cell = 55;
+	var grid = [22, 22];
 	var numberOfElements = grid[0] * grid[1];
 	var animation;
 	var paused = true;
 
-	fitElementToParent(staggerVisualizerEl, 0);
+	fitElementToParent(staggerVisualizerEl, 9);
 
 	for (var i = 0; i < numberOfElements; i++) {
-		var dotEl = document.createElement("div");
+		var dotEl = document.createElement("svg");
+		dotEl.id = i;
 		dotEl.classList.add("dot");
+		dotEl.addEventListener("click", function play(e) {
+			// console.log("play");
+			// console.log(this.id);
+
+			paused = false;
+			if (animation) animation.pause();
+
+			animation = anime
+				.timeline({
+					easing: "easeInOutQuad"
+					// complete: play
+				})
+				.add(
+					{
+						targets: ".stagger-visualizer .dot",
+						keyframes: [
+							{
+								scale: anime.stagger([1, 1], { grid: grid, from: this.id }),
+								background: "#C795AE",
+								duration: 100
+							},
+							{
+								scale: 1,
+								background: "#1f2427",
+								duration: 1200
+							}
+						],
+						delay: anime.stagger(40, { grid: grid, from: this.id })
+					},
+					0
+				);
+		});
 		dotsFragment.appendChild(dotEl);
 	}
-
 	dotsWrapperEl.appendChild(dotsFragment);
-
-	var index = anime.random(0, numberOfElements - 1);
-	var nextIndex = 0;
-
-	anime.set(".stagger-visualizer .cursor", {
-		translateX: anime.stagger(-cell, { grid: grid, from: index, axis: "x" }),
-		translateY: anime.stagger(-cell, { grid: grid, from: index, axis: "y" }),
-		translateZ: 0,
-		scale: 1.5
-	});
-
-	function play() {
-		paused = false;
-		if (animation) animation.pause();
-
-		nextIndex = anime.random(0, numberOfElements - 1);
-
-		animation = anime
-			.timeline({
-				easing: "easeInOutQuad",
-				complete: play
-			})
-			.add({
-				targets: ".stagger-visualizer .cursor",
-				keyframes: [
-					{ scale: 0.75, duration: 120 },
-					{ scale: 2.5, duration: 220 },
-					{ scale: 1.5, duration: 450 }
-				],
-				duration: 300
-			})
-			.add(
-				{
-					targets: ".stagger-visualizer .dot",
-					keyframes: [
-						{
-							translateX: anime.stagger("-2px", {
-								grid: grid,
-								from: index,
-								axis: "x"
-							}),
-							translateY: anime.stagger("-2px", {
-								grid: grid,
-								from: index,
-								axis: "y"
-							}),
-							duration: 100
-						},
-						{
-							translateX: anime.stagger("4px", {
-								grid: grid,
-								from: index,
-								axis: "x"
-							}),
-							translateY: anime.stagger("4px", {
-								grid: grid,
-								from: index,
-								axis: "y"
-							}),
-							scale: anime.stagger([2.6, 1], { grid: grid, from: index }),
-							duration: 225
-						},
-						{
-							translateX: 0,
-							translateY: 0,
-							scale: 1,
-							duration: 1200
-						}
-					],
-					delay: anime.stagger(80, { grid: grid, from: index })
-				},
-				30
-			)
-			.add(
-				{
-					targets: ".stagger-visualizer .cursor",
-					translateX: {
-						value: anime.stagger(-cell, {
-							grid: grid,
-							from: nextIndex,
-							axis: "x"
-						})
-					},
-					translateY: {
-						value: anime.stagger(-cell, {
-							grid: grid,
-							from: nextIndex,
-							axis: "y"
-						})
-					},
-					scale: 1.5,
-					easing: "cubicBezier(.075, .2, .165, 1)"
-				},
-				"-=800"
-			);
-
-		index = nextIndex;
-	}
-
-	play();
-	console.log("play");
 })();
