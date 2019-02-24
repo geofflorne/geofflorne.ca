@@ -55,17 +55,17 @@ const resize = () => {
         dotsFragment.appendChild(dotEl);
     });
     dotsWrapperEl.appendChild(dotsFragment);
-    document.querySelector('.start').onclick = () => {
-        document.querySelectorAll('.dot').forEach(el => {
-            el.pulse.play();
-        });
-    };
-    document.querySelector('.stop').onclick = () => {
-        document.querySelectorAll('.dot').forEach(el => {
-            el.pulse.restart();
-            el.pulse.pause();
-        });
-    };
+    // document.querySelector('.start').onclick = () => {
+    //     document.querySelectorAll('.dot').forEach(el => {
+    //         el.pulse.play();
+    //     });
+    // };
+    // document.querySelector('.stop').onclick = () => {
+    //     document.querySelectorAll('.dot').forEach(el => {
+    //         el.pulse.restart();
+    //         el.pulse.pause();
+    //     });
+    // };
 };
 resize();
 window.addEventListener('resize', resize);
