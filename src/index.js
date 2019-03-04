@@ -1,4 +1,3 @@
-'use strict';
 import anime from '../lib/anime.es.js';
 
 let dotsWrapperEl = document.querySelector('.dots-wrapper');
@@ -52,7 +51,7 @@ const resize = () => {
         dotEl.pulse = anime({
             targets: dotEl,
             background: ['#1f2427', '#413139'],
-            delay: Math.floor(Math.random() * grid[0] * grid[1] * 21),
+            delay: Math.floor(Math.random() * 10 * grid[0] * grid[1]),
             easing: 'easeInOutQuad',
             loop: true,
             direction: 'alternate'
