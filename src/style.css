@@ -4,8 +4,20 @@ body {
     margin: 0;
     font-family: 'Courier New', Courier, monospace;
     color: #f3f4f5;
+}
 
-    /* color: #747c84; */
+button,
+button:focus {
+    border: none;
+    outline: none;
+    display: inline-block;
+    color: #606f80;
+    background-color: #1c2023;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 21px;
+    text-align: center;
+    text-decoration: none;
+    margin: 13px;
 }
 
 body {
@@ -19,22 +31,12 @@ body {
 
 .content-wrapper {
     position: absolute;
-    /* width: 100%;
-    height: 100%; */
     z-index: 1;
 }
 
 .controls {
-    color: #f3f4f5;
-    background-color: #1c2023;
     position: absolute;
-    /* left: 20px;
-	top: 0; */
     z-index: 1;
-}
-
-h1 {
-    /* font-size: 20px; */
 }
 
 .animation-wrapper {
@@ -43,15 +45,9 @@ h1 {
     white-space: nowrap;
     overflow: hidden;
     position: static;
-    /* padding-bottom: 0%; */
 }
 
 .stagger-visualizer {
-    /* position: absolute; */
-    /* width: 1100px;
-    height: 550px; */
-    /* width: 100%; */
-    /* height: 100%; */
     transform-origin: left top;
 }
 
@@ -69,11 +65,11 @@ h1 {
 }
 
 .stagger-visualizer .dot {
+    cursor: pointer;
     position: relative;
     z-index: 1;
     width: 21px;
     height: 21px;
     margin: 13px;
     background-color: #1f2427;
-    /* border-radius: 50%; */
 }
