@@ -40,6 +40,7 @@ const play = (id, grid, colour) => {
 const resize = () => {
     anime.remove('.stagger-visualizer .dot');
     document.querySelector('.dots-wrapper').innerHTML = '';
+    staggerPlay = false;
     dotsWrapperEl = document.querySelector('.dots-wrapper');
     dotsFragment = document.createDocumentFragment();
     const grid = [
