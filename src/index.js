@@ -48,7 +48,7 @@ const resize = () => {
         parseInt(window.innerHeight / 47)
     ];
     // tfw ES6
-    [...Array(grid.reduce((x, y) => x * y)).keys()].map(i => {
+    [...Array(grid.reduce((X, D) => X * D)).keys()].map(i => {
         const colour = i % 2 === 0 ? '#606F80' : '#7F5F6F';
         const dotEl = document.createElement('svg');
         dotEl.id = i;

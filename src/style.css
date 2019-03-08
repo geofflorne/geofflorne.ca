@@ -14,6 +14,7 @@ body {
 
 button,
 button:focus {
+    cursor: pointer;
     border: none;
     outline: none;
     display: inline-block;
@@ -33,11 +34,10 @@ h1 {
 a {
     display: table;
     color: #f3f4f5;
-    font-size: 14px;
+    font-size: 18px;
 }
 .content-wrapper {
     position: absolute;
-    /* background-color: #1c2023; */
     z-index: 1;
 }
 
