@@ -2,11 +2,15 @@ import anime from '../lib/anime.es.js';
 
 let dotsWrapperEl = document.querySelector('.dots-wrapper');
 let dotsFragment = document.createDocumentFragment();
-let staggerPlay = false;
-let pulsePlay = true;
+let staggerPlaying = false;
+let pulsePlaying = true;
 
-const play = (id, grid, colour) => {
-    if (!staggerPlay) {
+const grey = '#1f2427';
+const blue = '#606F80';
+const pink = '#7F5F6F';
+
+const playStagger = (id, grid, colour) => {
+    if (!staggerPlaying) {
         anime({
             targets: '.stagger-visualizer .dot',
             background: [
@@ -16,18 +20,18 @@ const play = (id, grid, colour) => {
                     duration: 500
                 },
                 {
-                    value: '#1f2427',
+                    value: grey,
                     easing: 'easeInOutQuad',
                     duration: 1200
                 }
             ],
             delay: anime.stagger(40, { grid: grid, from: id }),
             begin: () => {
-                staggerPlay = true;
+                staggerPlaying = true;
             },
             complete: () => {
-                staggerPlay = false;
-                if (pulsePlay) {
+                staggerPlaying = false;
+                if (pulsePlaying) {
                     document.querySelectorAll('.dot').forEach(el => {
                         el.pulse.restart();
                     });
@@ -37,32 +41,29 @@ const play = (id, grid, colour) => {
     }
 };
 
-const resize = () => {
+const resizeHandler = () => {
     anime.remove('.stagger-visualizer .dot');
     document.querySelector('.dots-wrapper').innerHTML = '';
-    staggerPlay = false;
+    staggerPlaying = false;
     dotsWrapperEl = document.querySelector('.dots-wrapper');
     dotsFragment = document.createDocumentFragment();
-    const grid = [
-        parseInt(window.innerWidth / 47),
-        parseInt(window.innerHeight / 47)
-    ];
+    const grid = [parseInt(window.innerWidth / 47), parseInt(window.innerHeight / 47)];
     // tfw ES6
     [...Array(grid.reduce((X, D) => X * D)).keys()].map(i => {
-        const colour = i % 2 === 0 ? '#606F80' : '#7F5F6F';
+        const colour = Math.floor(Math.random() * 2) % 2 === 0 ? blue : pink;
         const dotEl = document.createElement('svg');
         dotEl.id = i;
         dotEl.classList.add('dot');
         dotEl.pulse = anime({
             targets: dotEl,
-            background: ['#1f2427', colour],
+            background: [grey, colour],
             delay: Math.floor(Math.random() * 21 * grid[0] * grid[1]),
             easing: 'easeInOutQuad',
             loop: true,
             direction: 'alternate'
         });
         dotEl.addEventListener('click', () => {
-            play(dotEl.id, grid, colour);
+            playStagger(dotEl.id, grid, colour);
         });
         dotsFragment.appendChild(dotEl);
     });
@@ -71,20 +72,20 @@ const resize = () => {
 };
 
 document.querySelector('.toggle').onclick = () => {
-    if (pulsePlay) {
+    if (pulsePlaying) {
         document.querySelectorAll('.dot').forEach(el => {
             el.pulse.restart();
             el.pulse.pause();
         });
-        pulsePlay = false;
+        pulsePlaying = false;
         document.querySelector('.toggle').innerHTML = 'Start Animation';
     } else {
         document.querySelectorAll('.dot').forEach(el => {
             el.pulse.restart();
         });
-        pulsePlay = true;
+        pulsePlaying = true;
         document.querySelector('.toggle').innerHTML = 'Stop Animation';
     }
 };
-resize();
-window.addEventListener('resize', resize);
+resizeHandler();
+window.addEventListener('resize', resizeHandler);
